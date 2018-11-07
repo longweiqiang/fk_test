@@ -1,0 +1,1298 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>xjx-风控自有数据接口测试执行报告</title>
+    <meta name="generator" content="HTMLTestRunner 0.9.1"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    
+    <link href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/echarts/3.8.5/echarts.common.min.js"></script>
+    <!-- <script type="text/javascript" src="js/echarts.common.min.js"></script> -->
+    
+    
+<style type="text/css" media="screen">
+    body        { font-family: Microsoft YaHei,Consolas,arial,sans-serif; font-size: 80%; }
+    table       { font-size: 100%; }
+    pre         { white-space: pre-wrap;word-wrap: break-word; }
+
+    /* -- heading ---------------------------------------------------------------------- */
+    h1 {
+        font-size: 16pt;
+        color: gray;
+    }
+    .heading {
+        margin-top: 0ex;
+        margin-bottom: 1ex;
+    }
+
+    .heading .attribute {
+        margin-top: 1ex;
+        margin-bottom: 0;
+    }
+
+    .heading .description {
+        margin-top: 2ex;
+        margin-bottom: 3ex;
+    }
+
+    /* -- css div popup ------------------------------------------------------------------------ */
+    a.popup_link {
+    }
+
+    a.popup_link:hover {
+        color: red;
+    }
+
+    .popup_window {
+        display: none;
+        position: relative;
+        left: 0px;
+        top: 0px;
+        /*border: solid #627173 1px; */
+        padding: 10px;
+        /*background-color: #E6E6D6; */
+        font-family: "Lucida Console", "Courier New", Courier, monospace;
+        text-align: left;
+        font-size: 8pt;
+        /* width: 500px;*/
+    }
+
+    }
+    /* -- report ------------------------------------------------------------------------ */
+    #show_detail_line {
+        margin-top: 3ex;
+        margin-bottom: 1ex;
+    }
+    #result_table {
+        width: 99%;
+    }
+    #header_row {
+        font-weight: bold;
+        color: #303641;
+        background-color: #ebebeb;
+    }
+    #total_row  { font-weight: bold; }
+    .passClass  { background-color: #bdedbc; }
+    .failClass  { background-color: #ffefa4; }
+    .errorClass { background-color: #ffc9c9; }
+    .passCase   { color: #6c6; }
+    .failCase   { color: #FF6600; font-weight: bold; }
+    .errorCase  { color: #c00; font-weight: bold; }
+    .hiddenRow  { display: none; }
+    .testcase   { margin-left: 2em; }
+
+
+    /* -- ending ---------------------------------------------------------------------- */
+    #ending {
+    }
+
+    #div_base {
+                position:absolute;
+                top:0%;
+                left:5%;
+                right:5%;
+                width: auto;
+                height: auto;
+                margin: -15px 0 0 0;
+    }
+</style>
+
+    
+</head>
+<body>
+    <script language="javascript" type="text/javascript"><!--
+    output_list = Array();
+
+    /* level - 0:Summary; 1:Failed; 2:All */
+    function showCase(level) {
+        trs = document.getElementsByTagName("tr");
+        for (var i = 0; i < trs.length; i++) {
+            tr = trs[i];
+            id = tr.id;
+            if (id.substr(0,2) == 'ft') {
+                if (level < 1) {
+                    tr.className = 'hiddenRow';
+                }
+                else {
+                    tr.className = '';
+                }
+            }
+            if (id.substr(0,2) == 'pt') {
+                if (level > 1) {
+                    tr.className = '';
+                }
+                else {
+                    tr.className = 'hiddenRow';
+                }
+            }
+        }
+    }
+
+
+    function showClassDetail(cid, count) {
+        var id_list = Array(count);
+        var toHide = 1;
+        for (var i = 0; i < count; i++) {
+            tid0 = 't' + cid.substr(1) + '.' + (i+1);
+            tid = 'f' + tid0;
+            tr = document.getElementById(tid);
+            if (!tr) {
+                tid = 'p' + tid0;
+                tr = document.getElementById(tid);
+            }
+            id_list[i] = tid;
+            if (tr.className) {
+                toHide = 0;
+            }
+        }
+        for (var i = 0; i < count; i++) {
+            tid = id_list[i];
+            if (toHide) {
+                document.getElementById('div_'+tid).style.display = 'none'
+                document.getElementById(tid).className = 'hiddenRow';
+            }
+            else {
+                document.getElementById(tid).className = '';
+            }
+        }
+    }
+
+
+    function showTestDetail(div_id){
+        var details_div = document.getElementById(div_id)
+        var displayState = details_div.style.display
+        // alert(displayState)
+        if (displayState != 'block' ) {
+            displayState = 'block'
+            details_div.style.display = 'block'
+        }
+        else {
+            details_div.style.display = 'none'
+        }
+    }
+
+
+    function html_escape(s) {
+        s = s.replace(/&/g,'&amp;');
+        s = s.replace(/</g,'&lt;');
+        s = s.replace(/>/g,'&gt;');
+        return s;
+    }
+
+    /* obsoleted by detail in <div>
+    function showOutput(id, name) {
+        var w = window.open("", //url
+                        name,
+                        "resizable,scrollbars,status,width=800,height=450");
+        d = w.document;
+        d.write("<pre>");
+        d.write(html_escape(output_list[id]));
+        d.write("\n");
+        d.write("<a href='javascript:window.close()'>close</a>\n");
+        d.write("</pre>\n");
+        d.close();
+    }
+    */
+    --></script>
+
+    <div id="div_base">
+        
+    <div class='page-header'>
+        <h1>xjx-风控自有数据接口测试执行报告</h1>
+    <p class='attribute'><strong>开始时间:</strong> 2018-11-06 19:05:14</p>
+<p class='attribute'><strong>运行时长:</strong> 0:00:07.107268</p>
+<p class='attribute'><strong>状态:</strong> 通过 37 失败 8 错误 28</p>
+
+    </div>
+    <div style="float: left;width:50%;"><p class='description'>python3.7+requests</p></div>
+    <div id="chart" style="width:50%;height:400px;float:left;"></div>
+
+        
+    <div class="btn-group btn-group-sm">
+        <button class="btn btn-default" onclick='javascript:showCase(0)'>总结</button>
+        <button class="btn btn-default" onclick='javascript:showCase(1)'>失败</button>
+        <button class="btn btn-default" onclick='javascript:showCase(2)'>全部</button>
+    </div>
+    <p></p>
+    <table id='result_table' class="table table-bordered">
+        <colgroup>
+            <col align='left' />
+            <col align='right' />
+            <col align='right' />
+            <col align='right' />
+            <col align='right' />
+            <col align='right' />
+        </colgroup>
+        <tr id='header_row'>
+            <td>测试套件/测试用例</td>
+            <td>总数</td>
+            <td>通过</td>
+            <td>失败</td>
+            <td>错误</td>
+            <td>查看</td>
+        </tr>
+        
+    <tr class='errorClass'>
+        <td>case.test.jsxjx_self_data</td>
+        <td>73</td>
+        <td>37</td>
+        <td>8</td>
+        <td>28</td>
+        <td><a href="javascript:showClassDetail('c1',73)">详情</a></td>
+    </tr>
+
+<tr id='pt1.1' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_01_http_code: 判断http状态码</div></td>
+    <td colspan='5' align='center'>通过</td>
+</tr>
+
+<tr id='pt1.2' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_02_diy_code: 判断自定义code</div></td>
+    <td colspan='5' align='center'>通过</td>
+</tr>
+
+<tr id='pt1.3' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_03_message: 判断message</div></td>
+    <td colspan='5' align='center'>通过</td>
+</tr>
+
+<tr id='pt1.4' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_04_body_order_01_id: 判断body.order[0]id</div></td>
+    <td colspan='5' align='center'>通过</td>
+</tr>
+
+<tr id='pt1.5' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_05_body_order_01_order_type: 判断body.order[0]order_type</div></td>
+    <td colspan='5' align='center'>通过</td>
+</tr>
+
+<tr id='pt1.6' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_06_body_order_01_money_amount: 判断body.order[0]money_amount</div></td>
+    <td colspan='5' align='center'>通过</td>
+</tr>
+
+<tr id='ft1.7' class='none'>
+    <td class='failCase'><div class='testcase'>test_07_body_order_01_apr: 判断body.order[0]apr</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft1.7')" >
+        失败</a>
+
+    <div id='div_ft1.7' class="popup_window">
+        <pre>ft1.7: Traceback (most recent call last):
+  File "C:\Users\Administrator\PycharmProjects\fk_test\case\test.py", line 104, in test_07_body_order_01_apr
+    self.assertEqual(data, data2)
+AssertionError: '1303' != '13035'
+- 1303
++ 13035
+?     +
+
+</pre>
+    </div>
+    <!--css div popup end-->
+
+    </td>
+</tr>
+
+<tr id='pt1.8' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_08_body_order_01_loan_method: 判断body.order[0]loan_method</div></td>
+    <td colspan='5' align='center'>通过</td>
+</tr>
+
+<tr id='pt1.9' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_09_body_order_01_loan_term: 判断body.order[0]loan_term</div></td>
+    <td colspan='5' align='center'>通过</td>
+</tr>
+
+<tr id='pt1.10' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_10_body_order_01_time: 判断body.order[0]time</div></td>
+    <td colspan='5' align='center'>通过</td>
+</tr>
+
+<tr id='pt1.11' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_11_body_order_01_client_type: 判断body.order[0]client_type</div></td>
+    <td colspan='5' align='center'>通过</td>
+</tr>
+
+<tr id='pt1.12' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_12_body_order_01_status: 判断body.order[0]status</div></td>
+    <td colspan='5' align='center'>通过</td>
+</tr>
+
+<tr id='pt1.13' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_13_body_order_01_is_depository: 判断body.order[0]is_depository</div></td>
+    <td colspan='5' align='center'>通过</td>
+</tr>
+
+<tr id='ft1.14' class='none'>
+    <td class='failCase'><div class='testcase'>test_14_body_order_01_len: 判断body.order总订单数量</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft1.14')" >
+        失败</a>
+
+    <div id='div_ft1.14' class="popup_window">
+        <pre>ft1.14: Traceback (most recent call last):
+  File "C:\Users\Administrator\PycharmProjects\fk_test\case\test.py", line 212, in test_14_body_order_01_len
+    self.assertEqual(data, data2)
+AssertionError: '5' != '6'
+- 5
++ 6
+
+</pre>
+    </div>
+    <!--css div popup end-->
+
+    </td>
+</tr>
+
+<tr id='ft1.15' class='none'>
+    <td class='failCase'><div class='testcase'>test_15_body_repayment_period_01_id: 判断body.repayment_period[0]id</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft1.15')" >
+        失败</a>
+
+    <div id='div_ft1.15' class="popup_window">
+        <pre>ft1.15: Traceback (most recent call last):
+  File "C:\Users\Administrator\PycharmProjects\fk_test\case\test.py", line 221, in test_15_body_repayment_period_01_id
+    self.assertEqual(data, data2)
+AssertionError: '50006215' != '50006196'
+- 50006215
+?      - ^
++ 50006196
+?       ^^
+
+</pre>
+    </div>
+    <!--css div popup end-->
+
+    </td>
+</tr>
+
+<tr id='ft1.16' class='none'>
+    <td class='failCase'><div class='testcase'>test_16_body_repayment_period_01_order_id: 判断body.repayment_period[0]order_id</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft1.16')" >
+        失败</a>
+
+    <div id='div_ft1.16' class="popup_window">
+        <pre>ft1.16: Traceback (most recent call last):
+  File "C:\Users\Administrator\PycharmProjects\fk_test\case\test.py", line 230, in test_16_body_repayment_period_01_order_id
+    self.assertEqual(data, data2)
+AssertionError: '50108653' != '50108616'
+- 50108653
+?       ^^
++ 50108616
+?       ^^
+
+</pre>
+    </div>
+    <!--css div popup end-->
+
+    </td>
+</tr>
+
+<tr id='pt1.17' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_17_body_repayment_period_01_plan_repayment_money: 判断body.repayment_period[0]plan_repayment_money</div></td>
+    <td colspan='5' align='center'>通过</td>
+</tr>
+
+<tr id='ft1.18' class='none'>
+    <td class='failCase'><div class='testcase'>test_18_body_repayment_period_01_user_id: 判断body.repayment_period[0]user_id</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft1.18')" >
+        失败</a>
+
+    <div id='div_ft1.18' class="popup_window">
+        <pre>ft1.18: Traceback (most recent call last):
+  File "C:\Users\Administrator\PycharmProjects\fk_test\case\test.py", line 248, in test_18_body_repayment_period_01_user_id
+    self.assertEqual(data, data2)
+AssertionError: '768093265' != '768093235'
+- 768093265
+?        ^
++ 768093235
+?        ^
+
+</pre>
+    </div>
+    <!--css div popup end-->
+
+    </td>
+</tr>
+
+<tr id='pt1.19' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_19_body_repayment_period_01_period: 判断body.repayment_period[0]period</div></td>
+    <td colspan='5' align='center'>通过</td>
+</tr>
+
+<tr id='ft1.20' class='none'>
+    <td class='failCase'><div class='testcase'>test_20_body_repayment_period_01_plan_repayment_time: 判断body.repayment_period[0]plan_repayment_time</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft1.20')" >
+        失败</a>
+
+    <div id='div_ft1.20' class="popup_window">
+        <pre>ft1.20: Traceback (most recent call last):
+  File "C:\Users\Administrator\PycharmProjects\fk_test\case\test.py", line 267, in test_20_body_repayment_period_01_plan_repayment_time
+    self.assertEqual(data, plan_repayment_time)
+AssertionError: '1542038400' != '1541347200'
+- 1542038400
++ 1541347200
+
+</pre>
+    </div>
+    <!--css div popup end-->
+
+    </td>
+</tr>
+
+<tr id='pt1.21' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_21_body_repayment_period_01_counter_fee: 判断body.repayment_period[0]counter_fee</div></td>
+    <td colspan='5' align='center'>通过</td>
+</tr>
+
+<tr id='pt1.22' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_22_body_repayment_period_01_true_repayment_money: 判断body.repayment_period[0]true_repayment_money</div></td>
+    <td colspan='5' align='center'>通过</td>
+</tr>
+
+<tr id='ft1.23' class='none'>
+    <td class='failCase'><div class='testcase'>test_23_body_repayment_period_01_true_repayment_time: 判断body.repayment_period[0]true_repayment_time</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft1.23')" >
+        失败</a>
+
+    <div id='div_ft1.23' class="popup_window">
+        <pre>ft1.23: Traceback (most recent call last):
+  File "C:\Users\Administrator\PycharmProjects\fk_test\case\test.py", line 295, in test_23_body_repayment_period_01_true_repayment_time
+    self.assertEqual(data, repayment_real_time)
+AssertionError: '1541496862' != '1540802686'
+- 1541496862
++ 1540802686
+
+</pre>
+    </div>
+    <!--css div popup end-->
+
+    </td>
+</tr>
+
+<tr id='pt1.24' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_24_body_repayment_period_01_interests: 判断body.repayment_period[0]interests</div></td>
+    <td colspan='5' align='center'>通过</td>
+</tr>
+
+<tr id='pt1.25' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_25_body_repayment_period_01_late_fee: 判断body.repayment_period[0]late_fee</div></td>
+    <td colspan='5' align='center'>通过</td>
+</tr>
+
+<tr id='pt1.26' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_26_body_repayment_period_01_principal: 判断body.repayment_period[0]principal</div></td>
+    <td colspan='5' align='center'>通过</td>
+</tr>
+
+<tr id='pt1.27' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_27_body_repayment_period_01_late_day: 判断body.repayment_period[0]late_day</div></td>
+    <td colspan='5' align='center'>通过</td>
+</tr>
+
+<tr id='pt1.28' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_32_body_repayment_period_01_len: 判断body.repayment_period总订单数量</div></td>
+    <td colspan='5' align='center'>通过</td>
+</tr>
+
+<tr id='pt1.29' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_33_body_current_order_01_id: 判断body.current_order.id</div></td>
+    <td colspan='5' align='center'>通过</td>
+</tr>
+
+<tr id='pt1.30' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_34_body_current_order_01_order_type: 判断body.current_order.order_type</div></td>
+    <td colspan='5' align='center'>通过</td>
+</tr>
+
+<tr id='pt1.31' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_35_body_current_order_01_money_amount: 判断body.current_order.money_amount</div></td>
+    <td colspan='5' align='center'>通过</td>
+</tr>
+
+<tr id='ft1.32' class='none'>
+    <td class='failCase'><div class='testcase'>test_36_body_current_order_01_apr: 判断body.current_order.apr</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft1.32')" >
+        失败</a>
+
+    <div id='div_ft1.32' class="popup_window">
+        <pre>ft1.32: Traceback (most recent call last):
+  File "C:\Users\Administrator\PycharmProjects\fk_test\case\test.py", line 419, in test_36_body_current_order_01_apr
+    self.assertEqual(data, data2)
+AssertionError: '1303' != '13035'
+- 1303
++ 13035
+?     +
+
+</pre>
+    </div>
+    <!--css div popup end-->
+
+    </td>
+</tr>
+
+<tr id='pt1.33' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_37_body_current_order_loan_method: 判断body.current_order.loan_method</div></td>
+    <td colspan='5' align='center'>通过</td>
+</tr>
+
+<tr id='pt1.34' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_38_body_current_order_loan_term: 判断body.current_order.loan_term</div></td>
+    <td colspan='5' align='center'>通过</td>
+</tr>
+
+<tr id='pt1.35' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_39_body_current_order_time: 判断body.current_order.time</div></td>
+    <td colspan='5' align='center'>通过</td>
+</tr>
+
+<tr id='pt1.36' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_40_body_current_order_client_type: 判断body.current_order.client_type</div></td>
+    <td colspan='5' align='center'>通过</td>
+</tr>
+
+<tr id='pt1.37' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_41_body_current_order_status: 判断body.current_order.status</div></td>
+    <td colspan='5' align='center'>通过</td>
+</tr>
+
+<tr id='pt1.38' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_42_body_current_order_is_depository: 判断body.current_order.is_depository</div></td>
+    <td colspan='5' align='center'>通过</td>
+</tr>
+
+<tr id='ft1.39' class='none'>
+    <td class='errorCase'><div class='testcase'>test_43_body_user_info_user_id: 判断body.user_info.user_id</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft1.39')" >
+        错误</a>
+
+    <div id='div_ft1.39' class="popup_window">
+        <pre>ft1.39: Traceback (most recent call last):
+  File "C:\Users\Administrator\PycharmProjects\fk_test\case\test.py", line 524, in test_43_body_user_info_user_id
+    data2 = self.is_none.is_None(data1).is_none()
+  File "C:\Users\Administrator\PycharmProjects\fk_test\utils\data_manage.py", line 20, in __init__
+    self.data = str(t_data[items])
+TypeError: 'NoneType' object is not subscriptable
+</pre>
+    </div>
+    <!--css div popup end-->
+
+    </td>
+</tr>
+
+<tr id='ft1.40' class='none'>
+    <td class='errorCase'><div class='testcase'>test_44_body_user_info_name: 判断body.user_info.name</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft1.40')" >
+        错误</a>
+
+    <div id='div_ft1.40' class="popup_window">
+        <pre>ft1.40: Traceback (most recent call last):
+  File "C:\Users\Administrator\PycharmProjects\fk_test\case\test.py", line 532, in test_44_body_user_info_name
+    data2 = self.is_none.is_None(data1).is_none()
+  File "C:\Users\Administrator\PycharmProjects\fk_test\utils\data_manage.py", line 20, in __init__
+    self.data = str(t_data[items])
+TypeError: 'NoneType' object is not subscriptable
+</pre>
+    </div>
+    <!--css div popup end-->
+
+    </td>
+</tr>
+
+<tr id='ft1.41' class='none'>
+    <td class='errorCase'><div class='testcase'>test_45_body_user_info_phone: 判断body.user_info.phone</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft1.41')" >
+        错误</a>
+
+    <div id='div_ft1.41' class="popup_window">
+        <pre>ft1.41: Traceback (most recent call last):
+  File "C:\Users\Administrator\PycharmProjects\fk_test\case\test.py", line 540, in test_45_body_user_info_phone
+    data2 = self.is_none.is_None(data1).is_none()
+  File "C:\Users\Administrator\PycharmProjects\fk_test\utils\data_manage.py", line 20, in __init__
+    self.data = str(t_data[items])
+TypeError: 'NoneType' object is not subscriptable
+</pre>
+    </div>
+    <!--css div popup end-->
+
+    </td>
+</tr>
+
+<tr id='ft1.42' class='none'>
+    <td class='errorCase'><div class='testcase'>test_46_body_user_info_id_number: 判断body.user_info.id_number</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft1.42')" >
+        错误</a>
+
+    <div id='div_ft1.42' class="popup_window">
+        <pre>ft1.42: Traceback (most recent call last):
+  File "C:\Users\Administrator\PycharmProjects\fk_test\case\test.py", line 548, in test_46_body_user_info_id_number
+    data2 = self.is_none.is_None(data1).is_none()
+  File "C:\Users\Administrator\PycharmProjects\fk_test\utils\data_manage.py", line 20, in __init__
+    self.data = str(t_data[items])
+TypeError: 'NoneType' object is not subscriptable
+</pre>
+    </div>
+    <!--css div popup end-->
+
+    </td>
+</tr>
+
+<tr id='ft1.43' class='none'>
+    <td class='errorCase'><div class='testcase'>test_47_body_user_info_reg_time: 判断body.user_info.reg_time</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft1.43')" >
+        错误</a>
+
+    <div id='div_ft1.43' class="popup_window">
+        <pre>ft1.43: Traceback (most recent call last):
+  File "C:\Users\Administrator\PycharmProjects\fk_test\case\test.py", line 556, in test_47_body_user_info_reg_time
+    data2 = self.is_none.is_None(data1).is_none()
+  File "C:\Users\Administrator\PycharmProjects\fk_test\utils\data_manage.py", line 20, in __init__
+    self.data = str(t_data[items])
+TypeError: 'NoneType' object is not subscriptable
+</pre>
+    </div>
+    <!--css div popup end-->
+
+    </td>
+</tr>
+
+<tr id='ft1.44' class='none'>
+    <td class='errorCase'><div class='testcase'>test_48_body_user_info_reg_ip: 判断body.user_info.reg_ip</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft1.44')" >
+        错误</a>
+
+    <div id='div_ft1.44' class="popup_window">
+        <pre>ft1.44: Traceback (most recent call last):
+  File "C:\Users\Administrator\PycharmProjects\fk_test\case\test.py", line 568, in test_48_body_user_info_reg_ip
+    data2 = self.is_none.is_None(data1).is_none()
+  File "C:\Users\Administrator\PycharmProjects\fk_test\utils\data_manage.py", line 20, in __init__
+    self.data = str(t_data[items])
+TypeError: 'NoneType' object is not subscriptable
+</pre>
+    </div>
+    <!--css div popup end-->
+
+    </td>
+</tr>
+
+<tr id='ft1.45' class='none'>
+    <td class='errorCase'><div class='testcase'>test_49_body_user_info_customer_type: 判断body.user_info.customer_type</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft1.45')" >
+        错误</a>
+
+    <div id='div_ft1.45' class="popup_window">
+        <pre>ft1.45: Traceback (most recent call last):
+  File "C:\Users\Administrator\PycharmProjects\fk_test\case\test.py", line 576, in test_49_body_user_info_customer_type
+    data2 = self.is_none.is_None(data1).is_none()
+  File "C:\Users\Administrator\PycharmProjects\fk_test\utils\data_manage.py", line 20, in __init__
+    self.data = str(t_data[items])
+TypeError: 'NoneType' object is not subscriptable
+</pre>
+    </div>
+    <!--css div popup end-->
+
+    </td>
+</tr>
+
+<tr id='ft1.46' class='none'>
+    <td class='errorCase'><div class='testcase'>test_50_body_user_info_degrees: 判断body.user_info.degrees</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft1.46')" >
+        错误</a>
+
+    <div id='div_ft1.46' class="popup_window">
+        <pre>ft1.46: Traceback (most recent call last):
+  File "C:\Users\Administrator\PycharmProjects\fk_test\case\test.py", line 584, in test_50_body_user_info_degrees
+    data2 = self.is_none.is_None(data1).is_none()
+  File "C:\Users\Administrator\PycharmProjects\fk_test\utils\data_manage.py", line 20, in __init__
+    self.data = str(t_data[items])
+TypeError: 'NoneType' object is not subscriptable
+</pre>
+    </div>
+    <!--css div popup end-->
+
+    </td>
+</tr>
+
+<tr id='ft1.47' class='none'>
+    <td class='errorCase'><div class='testcase'>test_51_body_user_info_company_name: 判断body.user_info.company_name</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft1.47')" >
+        错误</a>
+
+    <div id='div_ft1.47' class="popup_window">
+        <pre>ft1.47: Traceback (most recent call last):
+  File "C:\Users\Administrator\PycharmProjects\fk_test\case\test.py", line 592, in test_51_body_user_info_company_name
+    data2 = self.is_none.is_None(data1).is_none()
+  File "C:\Users\Administrator\PycharmProjects\fk_test\utils\data_manage.py", line 20, in __init__
+    self.data = str(t_data[items])
+TypeError: 'NoneType' object is not subscriptable
+</pre>
+    </div>
+    <!--css div popup end-->
+
+    </td>
+</tr>
+
+<tr id='ft1.48' class='none'>
+    <td class='errorCase'><div class='testcase'>test_52_body_user_info_company_telephone: 判断body.user_info.company_telephone</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft1.48')" >
+        错误</a>
+
+    <div id='div_ft1.48' class="popup_window">
+        <pre>ft1.48: Traceback (most recent call last):
+  File "C:\Users\Administrator\PycharmProjects\fk_test\case\test.py", line 600, in test_52_body_user_info_company_telephone
+    data2 = self.is_none.is_None(data1).is_none()
+  File "C:\Users\Administrator\PycharmProjects\fk_test\utils\data_manage.py", line 20, in __init__
+    self.data = str(t_data[items])
+TypeError: 'NoneType' object is not subscriptable
+</pre>
+    </div>
+    <!--css div popup end-->
+
+    </td>
+</tr>
+
+<tr id='ft1.49' class='none'>
+    <td class='errorCase'><div class='testcase'>test_53_body_user_info_company_address: 判断body.user_info.company_address</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft1.49')" >
+        错误</a>
+
+    <div id='div_ft1.49' class="popup_window">
+        <pre>ft1.49: Traceback (most recent call last):
+  File "C:\Users\Administrator\PycharmProjects\fk_test\case\test.py", line 608, in test_53_body_user_info_company_address
+    data2 = self.is_none.is_None(data1).is_none()
+  File "C:\Users\Administrator\PycharmProjects\fk_test\utils\data_manage.py", line 20, in __init__
+    self.data = str(t_data[items])
+TypeError: 'NoneType' object is not subscriptable
+</pre>
+    </div>
+    <!--css div popup end-->
+
+    </td>
+</tr>
+
+<tr id='ft1.50' class='none'>
+    <td class='errorCase'><div class='testcase'>test_54_body_user_info_live_address: 判断body.user_info.live_address</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft1.50')" >
+        错误</a>
+
+    <div id='div_ft1.50' class="popup_window">
+        <pre>ft1.50: Traceback (most recent call last):
+  File "C:\Users\Administrator\PycharmProjects\fk_test\case\test.py", line 616, in test_54_body_user_info_live_address
+    data2 = self.is_none.is_None(data1).is_none()
+  File "C:\Users\Administrator\PycharmProjects\fk_test\utils\data_manage.py", line 20, in __init__
+    self.data = str(t_data[items])
+TypeError: 'NoneType' object is not subscriptable
+</pre>
+    </div>
+    <!--css div popup end-->
+
+    </td>
+</tr>
+
+<tr id='ft1.51' class='none'>
+    <td class='errorCase'><div class='testcase'>test_55_body_user_info_live_longitude: 判断body.user_info.live_longitude</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft1.51')" >
+        错误</a>
+
+    <div id='div_ft1.51' class="popup_window">
+        <pre>ft1.51: Traceback (most recent call last):
+  File "C:\Users\Administrator\PycharmProjects\fk_test\case\test.py", line 626, in test_55_body_user_info_live_longitude
+    data2 = self.is_none.is_None(data1).is_none()
+  File "C:\Users\Administrator\PycharmProjects\fk_test\utils\data_manage.py", line 20, in __init__
+    self.data = str(t_data[items])
+TypeError: 'NoneType' object is not subscriptable
+</pre>
+    </div>
+    <!--css div popup end-->
+
+    </td>
+</tr>
+
+<tr id='ft1.52' class='none'>
+    <td class='errorCase'><div class='testcase'>test_56_body_user_info_live_latitude: 判断body.user_info.live_latitude</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft1.52')" >
+        错误</a>
+
+    <div id='div_ft1.52' class="popup_window">
+        <pre>ft1.52: Traceback (most recent call last):
+  File "C:\Users\Administrator\PycharmProjects\fk_test\case\test.py", line 634, in test_56_body_user_info_live_latitude
+    data2 = self.is_none.is_None(data1).is_none()
+  File "C:\Users\Administrator\PycharmProjects\fk_test\utils\data_manage.py", line 20, in __init__
+    self.data = str(t_data[items])
+TypeError: 'NoneType' object is not subscriptable
+</pre>
+    </div>
+    <!--css div popup end-->
+
+    </td>
+</tr>
+
+<tr id='ft1.53' class='none'>
+    <td class='errorCase'><div class='testcase'>test_57_body_user_info_live_time_type: 判断body.user_info.live_time_type</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft1.53')" >
+        错误</a>
+
+    <div id='div_ft1.53' class="popup_window">
+        <pre>ft1.53: Traceback (most recent call last):
+  File "C:\Users\Administrator\PycharmProjects\fk_test\case\test.py", line 642, in test_57_body_user_info_live_time_type
+    data2 = self.is_none.is_None(data1).is_none()
+  File "C:\Users\Administrator\PycharmProjects\fk_test\utils\data_manage.py", line 20, in __init__
+    self.data = str(t_data[items])
+TypeError: 'NoneType' object is not subscriptable
+</pre>
+    </div>
+    <!--css div popup end-->
+
+    </td>
+</tr>
+
+<tr id='ft1.54' class='none'>
+    <td class='errorCase'><div class='testcase'>test_59_body_user_info_credit_total: 判断body.user_info.credit_total</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft1.54')" >
+        错误</a>
+
+    <div id='div_ft1.54' class="popup_window">
+        <pre>ft1.54: Traceback (most recent call last):
+  File "C:\Users\Administrator\PycharmProjects\fk_test\case\test.py", line 660, in test_59_body_user_info_credit_total
+    data2 = self.is_none.is_None(data1).is_none()
+  File "C:\Users\Administrator\PycharmProjects\fk_test\utils\data_manage.py", line 20, in __init__
+    self.data = str(t_data[items])
+TypeError: 'NoneType' object is not subscriptable
+</pre>
+    </div>
+    <!--css div popup end-->
+
+    </td>
+</tr>
+
+<tr id='pt1.55' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_60_body_user_info_id_card_count: 判断body.user_info.id_card_count</div></td>
+    <td colspan='5' align='center'>通过</td>
+</tr>
+
+<tr id='ft1.56' class='none'>
+    <td class='errorCase'><div class='testcase'>test_61_body_user_info_id_card_z_pic_name: 判断body.user_info.id_card_z[0]pic_name</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft1.56')" >
+        错误</a>
+
+    <div id='div_ft1.56' class="popup_window">
+        <pre>ft1.56: Traceback (most recent call last):
+  File "C:\Users\Administrator\PycharmProjects\fk_test\case\test.py", line 678, in test_61_body_user_info_id_card_z_pic_name
+    data2 = self.is_none.is_None(data1).is_none()
+  File "C:\Users\Administrator\PycharmProjects\fk_test\utils\data_manage.py", line 20, in __init__
+    self.data = str(t_data[items])
+TypeError: 'NoneType' object is not subscriptable
+</pre>
+    </div>
+    <!--css div popup end-->
+
+    </td>
+</tr>
+
+<tr id='ft1.57' class='none'>
+    <td class='errorCase'><div class='testcase'>test_63_body_user_info_id_card_f_pic_name: 判断body.user_info.id_card_f[0]pic_name</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft1.57')" >
+        错误</a>
+
+    <div id='div_ft1.57' class="popup_window">
+        <pre>ft1.57: Traceback (most recent call last):
+  File "C:\Users\Administrator\PycharmProjects\fk_test\case\test.py", line 706, in test_63_body_user_info_id_card_f_pic_name
+    data2 = self.is_none.is_None(data1).is_none()
+  File "C:\Users\Administrator\PycharmProjects\fk_test\utils\data_manage.py", line 20, in __init__
+    self.data = str(t_data[items])
+TypeError: 'NoneType' object is not subscriptable
+</pre>
+    </div>
+    <!--css div popup end-->
+
+    </td>
+</tr>
+
+<tr id='ft1.58' class='none'>
+    <td class='errorCase'><div class='testcase'>test_65_body_user_info_face_recognition_pic_name: 判断body.user_info.face_recognition[0]pic_name</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft1.58')" >
+        错误</a>
+
+    <div id='div_ft1.58' class="popup_window">
+        <pre>ft1.58: Traceback (most recent call last):
+  File "C:\Users\Administrator\PycharmProjects\fk_test\case\test.py", line 733, in test_65_body_user_info_face_recognition_pic_name
+    data2 = self.is_none.is_None(data1).is_none()
+  File "C:\Users\Administrator\PycharmProjects\fk_test\utils\data_manage.py", line 20, in __init__
+    self.data = str(t_data[items])
+TypeError: 'NoneType' object is not subscriptable
+</pre>
+    </div>
+    <!--css div popup end-->
+
+    </td>
+</tr>
+
+<tr id='pt1.59' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_66_body_user_info_work_card: 判断body.user_info.work_card</div></td>
+    <td colspan='5' align='center'>通过</td>
+</tr>
+
+<tr id='pt1.60' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_67_body_user_info_is_vip: 判断body.user_info.is_vip</div></td>
+    <td colspan='5' align='center'>通过</td>
+</tr>
+
+<tr id='pt1.61' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_68_body_user_info_bank_card: 判断body.user_info.bank_card</div></td>
+    <td colspan='5' align='center'>通过</td>
+</tr>
+
+<tr id='pt1.62' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_69_body_user_info_credit_card: 判断body.user_info.credit_card</div></td>
+    <td colspan='5' align='center'>通过</td>
+</tr>
+
+<tr id='pt1.63' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_70_body_user_info_reg_client_type: 判断body.user_info.reg_client_type</div></td>
+    <td colspan='5' align='center'>通过</td>
+</tr>
+
+<tr id='ft1.64' class='none'>
+    <td class='errorCase'><div class='testcase'>test_71_body_user_info_reg_source: 判断body.user_info.reg_source</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft1.64')" >
+        错误</a>
+
+    <div id='div_ft1.64' class="popup_window">
+        <pre>ft1.64: Traceback (most recent call last):
+  File "C:\Users\Administrator\PycharmProjects\fk_test\case\test.py", line 777, in test_71_body_user_info_reg_source
+    data2 = self.is_none.is_None(data1).is_none()
+  File "C:\Users\Administrator\PycharmProjects\fk_test\utils\data_manage.py", line 20, in __init__
+    self.data = str(t_data[items])
+TypeError: 'NoneType' object is not subscriptable
+</pre>
+    </div>
+    <!--css div popup end-->
+
+    </td>
+</tr>
+
+<tr id='ft1.65' class='none'>
+    <td class='errorCase'><div class='testcase'>test_72_body_user_contact_first_relation: 判断body.user_contact.first_relation</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft1.65')" >
+        错误</a>
+
+    <div id='div_ft1.65' class="popup_window">
+        <pre>ft1.65: Traceback (most recent call last):
+  File "C:\Users\Administrator\PycharmProjects\fk_test\case\test.py", line 785, in test_72_body_user_contact_first_relation
+    data2 = self.is_none.is_None(data1).is_none()
+  File "C:\Users\Administrator\PycharmProjects\fk_test\utils\data_manage.py", line 20, in __init__
+    self.data = str(t_data[items])
+TypeError: 'NoneType' object is not subscriptable
+</pre>
+    </div>
+    <!--css div popup end-->
+
+    </td>
+</tr>
+
+<tr id='ft1.66' class='none'>
+    <td class='errorCase'><div class='testcase'>test_73_body_user_contact_first_name: 判断body.user_contact.first_name</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft1.66')" >
+        错误</a>
+
+    <div id='div_ft1.66' class="popup_window">
+        <pre>ft1.66: Traceback (most recent call last):
+  File "C:\Users\Administrator\PycharmProjects\fk_test\case\test.py", line 793, in test_73_body_user_contact_first_name
+    data2 = self.is_none.is_None(data1).is_none()
+  File "C:\Users\Administrator\PycharmProjects\fk_test\utils\data_manage.py", line 20, in __init__
+    self.data = str(t_data[items])
+TypeError: 'NoneType' object is not subscriptable
+</pre>
+    </div>
+    <!--css div popup end-->
+
+    </td>
+</tr>
+
+<tr id='ft1.67' class='none'>
+    <td class='errorCase'><div class='testcase'>test_74_body_user_contact_first_mobile: 判断body.user_contact.first_mobile</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft1.67')" >
+        错误</a>
+
+    <div id='div_ft1.67' class="popup_window">
+        <pre>ft1.67: Traceback (most recent call last):
+  File "C:\Users\Administrator\PycharmProjects\fk_test\case\test.py", line 801, in test_74_body_user_contact_first_mobile
+    data2 = self.is_none.is_None(data1).is_none()
+  File "C:\Users\Administrator\PycharmProjects\fk_test\utils\data_manage.py", line 20, in __init__
+    self.data = str(t_data[items])
+TypeError: 'NoneType' object is not subscriptable
+</pre>
+    </div>
+    <!--css div popup end-->
+
+    </td>
+</tr>
+
+<tr id='pt1.68' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_75_body_user_contact_first_is_reg: 判断body.user_contact.first_is_reg</div></td>
+    <td colspan='5' align='center'>通过</td>
+</tr>
+
+<tr id='ft1.69' class='none'>
+    <td class='errorCase'><div class='testcase'>test_76_body_user_contact_first_reg_info_name: 判断body.user_contact.first_reg_info[0]name</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft1.69')" >
+        错误</a>
+
+    <div id='div_ft1.69' class="popup_window">
+        <pre>ft1.69: Traceback (most recent call last):
+  File "C:\Users\Administrator\PycharmProjects\fk_test\case\test.py", line 829, in test_76_body_user_contact_first_reg_info_name
+    data2 = self.is_none.is_None(data1).is_none()
+  File "C:\Users\Administrator\PycharmProjects\fk_test\utils\data_manage.py", line 20, in __init__
+    self.data = str(t_data[items])
+TypeError: 'NoneType' object is not subscriptable
+</pre>
+    </div>
+    <!--css div popup end-->
+
+    </td>
+</tr>
+
+<tr id='ft1.70' class='none'>
+    <td class='errorCase'><div class='testcase'>test_77_body_user_contact_first_reg_info_phone: 判断body.user_contact.first_reg_info[0]phone</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft1.70')" >
+        错误</a>
+
+    <div id='div_ft1.70' class="popup_window">
+        <pre>ft1.70: Traceback (most recent call last):
+  File "C:\Users\Administrator\PycharmProjects\fk_test\case\test.py", line 837, in test_77_body_user_contact_first_reg_info_phone
+    data2 = self.is_none.is_None(data1).is_none()
+  File "C:\Users\Administrator\PycharmProjects\fk_test\utils\data_manage.py", line 20, in __init__
+    self.data = str(t_data[items])
+TypeError: 'NoneType' object is not subscriptable
+</pre>
+    </div>
+    <!--css div popup end-->
+
+    </td>
+</tr>
+
+<tr id='ft1.71' class='none'>
+    <td class='errorCase'><div class='testcase'>test_78_body_user_contact_first_reg_info_id_number: 判断body.user_contact.first_reg_info[0]id_number</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft1.71')" >
+        错误</a>
+
+    <div id='div_ft1.71' class="popup_window">
+        <pre>ft1.71: Traceback (most recent call last):
+  File "C:\Users\Administrator\PycharmProjects\fk_test\case\test.py", line 845, in test_78_body_user_contact_first_reg_info_id_number
+    data2 = self.is_none.is_None(data1).is_none()
+  File "C:\Users\Administrator\PycharmProjects\fk_test\utils\data_manage.py", line 20, in __init__
+    self.data = str(t_data[items])
+TypeError: 'NoneType' object is not subscriptable
+</pre>
+    </div>
+    <!--css div popup end-->
+
+    </td>
+</tr>
+
+<tr id='ft1.72' class='none'>
+    <td class='errorCase'><div class='testcase'>test_79_body_user_contact_first_reg_info_reg_time: 判断body.user_contact.first_reg_info[0]reg_time</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft1.72')" >
+        错误</a>
+
+    <div id='div_ft1.72' class="popup_window">
+        <pre>ft1.72: Traceback (most recent call last):
+  File "C:\Users\Administrator\PycharmProjects\fk_test\case\test.py", line 853, in test_79_body_user_contact_first_reg_info_reg_time
+    data2 = self.is_none.is_None(data1).is_none()
+  File "C:\Users\Administrator\PycharmProjects\fk_test\utils\data_manage.py", line 20, in __init__
+    self.data = str(t_data[items])
+TypeError: 'NoneType' object is not subscriptable
+</pre>
+    </div>
+    <!--css div popup end-->
+
+    </td>
+</tr>
+
+<tr id='ft1.73' class='none'>
+    <td class='errorCase'><div class='testcase'>test_80_body_user_contact_first_reg_info_reg_ip: 判断body.user_contact.first_reg_info[0]reg_ip</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft1.73')" >
+        错误</a>
+
+    <div id='div_ft1.73' class="popup_window">
+        <pre>ft1.73: Traceback (most recent call last):
+  File "C:\Users\Administrator\PycharmProjects\fk_test\case\test.py", line 864, in test_80_body_user_contact_first_reg_info_reg_ip
+    data2 = self.is_none.is_None(data1).is_none()
+  File "C:\Users\Administrator\PycharmProjects\fk_test\utils\data_manage.py", line 20, in __init__
+    self.data = str(t_data[items])
+TypeError: 'NoneType' object is not subscriptable
+</pre>
+    </div>
+    <!--css div popup end-->
+
+    </td>
+</tr>
+
+        <tr id='total_row'>
+            <td>总计</td>
+            <td>73</td>
+            <td>37</td>
+            <td>8</td>
+            <td>28</td>
+            <td>&nbsp;</td>
+        </tr>
+    </table>
+
+        <div id='ending'>&nbsp;</div>
+        
+    <script type="text/javascript">
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('chart'));
+
+        // 指定图表的配置项和数据
+        var option = {
+            title : {
+                text: '测试执行情况',
+                x:'center'
+            },
+            tooltip : {
+                trigger: 'item',
+                formatter: "{a} <br/>{b} : {c} ({d}%)"
+            },
+            color: ['#95b75d', 'grey', '#b64645'],
+            legend: {
+                orient: 'vertical',
+                left: 'left',
+                data: ['通过','失败','错误']
+            },
+            series : [
+                {
+                    name: '测试执行情况',
+                    type: 'pie',
+                    radius : '60%',
+                    center: ['50%', '60%'],
+                    data:[
+                        {value:37, name:'通过'},
+                        {value:8, name:'失败'},
+                        {value:28, name:'错误'}
+                    ],
+                    itemStyle: {
+                        emphasis: {
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                    }
+                }
+            ]
+        };
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+    </script>
+    
+    </div>
+</body>
+</html>
